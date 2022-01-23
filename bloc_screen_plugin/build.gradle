@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.3.1'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.10'
+}
+
+
+
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'idea'
+
+group 'com.whynotdev.bloc'
+// If the plug-in related properties are set here,
+// the corresponding settings in Plugin.xml will be invalid
+// The two settings below are updated frequently, so put them here
+// The version number is modified here
+version '1.0.1a'
+
+// must!!!
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+// updateSinceUntilBuild no restrictions on plug-in installation corresponding
+// to the idea version
+intellij {
+    version = '2020.3.2'
+    updateSinceUntilBuild = false
+}
+
+
+// Update instructions are here
+patchPluginXml {
+    changeNotes = """
+    <h1>1.0.0a</h1>
+    <ul>
+        <li>First version</li>
+    </ul>
+    <h1>1.0.1a</h1>
+    <ul>
+        <li>Update</li>
+        <p>change to new flutter_bloc and refactoring</p>
+    </ul>
+    """
+}
+
+

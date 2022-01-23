@@ -1,0 +1,68 @@
+<idea-plugin>
+    <id>com.whynotdev.bloc</id>
+    <!-- Plug-in name, the name displayed by the official plugin library -->
+    <name>Flutter BlocScreen</name>
+    <!-- version number  -->
+    <!--    <version>1.1</version>-->
+    <!-- homepage and email (contact address)-->
+
+    <!-- The description of the plug-in
+    (the default value cannot be used, it must be modified to its own.
+    And it needs to be greater than 40 characters)-->
+    <description><![CDATA[
+    <h2>Used to generate the template code of flutter_bloc framework</h2>
+    <ul>
+        <li>Right-click the File: New -> Create New BlocScreen </li>
+    </ul>
+
+    <h3>Some Statement</h3>
+    <ul>
+        <li>The wrap snippet come form <a href="https://github.com/felangel/bloc/blob/master/extensions/intellij/intellij_generator_plugin/src/main/java/com/bloc/intellij_generator_plugin/intention_action/Snippets.java">intellij_generator_plugin</a> </li>
+        <li>The fast code snippet prompt come from <a href="https://github.com/felangel/bloc/blob/master/extensions/intellij/intellij_generator_plugin/src/main/resources/liveTemplates/Bloc.xml">intellij_generator_plugin</a> </li>
+    </ul>
+
+    ]]></description>
+    <vendor url="https://github.com/whynot-dev">whynot-dev</vendor>
+
+    <!--  It is recommended to write the id of other plug-ins that the plug-in depends on. Do
+    not write it. In some cases, uploading the plug-in will report an error -->
+    <depends>com.intellij.modules.all</depends>
+
+    <!-- Plug-in compatible with IDEA Build number-->
+    <idea-version since-build="173"/>
+    <!--    <idea-version since-build="173" until-build="203.7148.57"/>-->
+
+    <!-- Write plugin actions -->
+    <actions>
+        <!-- Add your actions here -->
+        <action id="com.tao.NewBloc" class="NewBloc" text="Create New BlocScreen"
+                description="Create Flutter BlocScreen template code" icon="/image/bloc_icon.png">
+            <add-to-group group-id="NewGroup" anchor="first"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- application level-->
+        <applicationService serviceImplementation="helper.BlocTaoData"/>
+        <applicationConfigurable parentId="tools" instance="setting.SettingsConfigurable"
+                                 id="BlocSettingsConfigurable" displayName="Flutter BlocScreen Setting"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <defaultLiveTemplatesProvider implementation="live_templates.BlocTemplateProvider"/>
+        <liveTemplateContext implementation="live_templates.BlocContext"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!--BlocBuilder Action-->
+        <intentionAction>
+            <className>intention_action.WrapWithBlocBuilderAction</className>
+            <category>Provider</category>
+        </intentionAction>
+        <!--BlocListener Action-->
+        <intentionAction>
+            <className>intention_action.WrapWithBlocListenerAction</className>
+            <category>Provider</category>
+        </intentionAction>
+    </extensions>
+</idea-plugin>
