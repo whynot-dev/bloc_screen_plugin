@@ -16,7 +16,6 @@
 The description of the plugin
 
 - Function: Function selection
-    - useFolder: use a file. After you select it, a folder is generated. The Hump name is automatically converted to lowercase + underscore.
-    - usePrefix: use the prefix, the generated file front prefix, prefix for: large hump named automatically converted to: lowercase + underline
+    - is Screen: if true adds "Screen" to the name
 
 - Directory Name: the Name of the directory screen. Use the hump Name.
