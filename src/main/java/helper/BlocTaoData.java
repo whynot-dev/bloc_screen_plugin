@@ -4,6 +4,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import org.jetbrains.annotations.NotNull;
 
 
 //custom save location
@@ -13,13 +14,8 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
         })
 public class BlocTaoData implements PersistentStateComponent<BlocTaoData> {
     // 0:default  1:high   2:extended
-    public String defaultMode = BlocConfig.modeBloc;
-
-    //default true
-    public boolean useFolder = BlocConfig.useFolder;
-
     //default false
-    public boolean usePrefix = BlocConfig.usePrefix;
+    public boolean isScreen = BlocConfig.isScreen;
 
 
     //Logical layer name
@@ -42,7 +38,7 @@ public class BlocTaoData implements PersistentStateComponent<BlocTaoData> {
     }
 
     @Override
-    public void loadState(BlocTaoData state) {
+    public void loadState(@NotNull BlocTaoData state) {
         XmlSerializerUtil.copyBean(state, this);
     }
 }

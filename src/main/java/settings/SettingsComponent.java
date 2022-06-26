@@ -1,4 +1,4 @@
-package setting;
+package settings;
 
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
@@ -20,10 +20,10 @@ public class SettingsComponent {
         viewFileName = new JBTextField();
 
         mainPanel = FormBuilder.createFormBuilder()
-                .addLabeledComponent(new JBLabel("Bloc Name: "), blocName)
-                .addLabeledComponent(new JBLabel("Event Name: "), eventName)
-                .addLabeledComponent(new JBLabel("View Name: "), viewName)
-                .addLabeledComponent(new JBLabel("View File Name: "), viewFileName)
+                .addLabeledComponent(new JBLabel("Bloc name: "), blocName)
+                .addLabeledComponent(new JBLabel("Event name: "), eventName)
+                .addLabeledComponent(new JBLabel("View name: "), viewName)
+                .addLabeledComponent(new JBLabel("View file name: "), viewFileName)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
     }

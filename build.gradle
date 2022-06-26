@@ -16,7 +16,7 @@ group 'com.whynotdev.bloc'
 // the corresponding settings in Plugin.xml will be invalid
 // The two settings below are updated frequently, so put them here
 // The version number is modified here
-version '1.0.1a'
+version '1.0.2a'
 
 // must!!!
 sourceCompatibility = 1.8
@@ -38,6 +38,9 @@ intellij {
     updateSinceUntilBuild = false
 }
 
+tasks.buildSearchableOptions {
+    enabled = false
+}
 
 // Update instructions are here
 patchPluginXml {
@@ -50,6 +53,11 @@ patchPluginXml {
     <ul>
         <li>Update</li>
         <p>change to new flutter_bloc and refactoring</p>
+    </ul>
+    <h1>1.0.2a</h1>
+    <ul>
+        <li>Update 26.06.2022</li>
+        <p>add selector versions for templates and update actual bloc template</p>
     </ul>
     """
 }

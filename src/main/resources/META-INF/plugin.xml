@@ -35,7 +35,7 @@
     <!-- Write plugin actions -->
     <actions>
         <!-- Add your actions here -->
-        <action id="com.tao.NewBloc" class="NewBloc" text="Create New BlocScreen"
+        <action id="com.tao.NewBloc" class="GenerateBlocScreen" text="Create New BlocScreen"
                 description="Create Flutter BlocScreen template code" icon="/image/bloc_icon.png">
             <add-to-group group-id="NewGroup" anchor="first"/>
         </action>
@@ -44,7 +44,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- application level-->
         <applicationService serviceImplementation="helper.BlocTaoData"/>
-        <applicationConfigurable parentId="tools" instance="setting.SettingsConfigurable"
+        <applicationConfigurable parentId="tools" instance="settings.SettingsConfigurable"
                                  id="BlocSettingsConfigurable" displayName="Flutter BlocScreen Setting"/>
     </extensions>
 

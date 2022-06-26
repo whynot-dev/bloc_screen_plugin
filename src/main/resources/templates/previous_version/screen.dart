@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:$main_package/core/bloc/bloc_action.dart';
 import 'package:$main_package/app/navigation/app_navigator.dart';
-import 'package:$main_package/app/navigation/navigation_action.dart';
+import 'package:$main_package/app/navigation/navigate_action.dart';
 import 'package:$main_package/core/ui/widgets/base_bloc_stateless_widget.dart';
 
 import 'bloc/$file_name_bloc.dart';

@@ -2,13 +2,9 @@ package helper;
 
 // set default value
 public class BlocConfig {
-    // use high mode
-
-    //default true
-    public static boolean useFolder = true;
 
     //default false
-    public static boolean usePrefix = false;
+    public static boolean isScreen = true;
 
     //Logical layer name
     public static String blocName = "Bloc";
@@ -21,5 +17,7 @@ public class BlocConfig {
     public static String eventName = "Event";
 
     //mode name
-    public static final String modeBloc = "Bloc";
+    public static final String actualVersion = "Actual version";
+
+    public static final String previousVersion = "Previous version";
 }

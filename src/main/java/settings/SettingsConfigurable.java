@@ -1,4 +1,4 @@
-package setting;
+package settings;
 
 import com.intellij.openapi.options.Configurable;
 import helper.BlocTaoData;
@@ -15,7 +15,7 @@ public class SettingsConfigurable implements Configurable {
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
-        return "Flutter Bloc Setting";
+        return "Flutter Bloc Settings";
     }
 
     @Nullable

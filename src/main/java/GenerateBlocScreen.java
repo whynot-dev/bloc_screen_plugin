@@ -10,14 +10,13 @@ import helper.BlocTaoData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.*;
 
 
-public class NewBloc extends AnAction {
+public class GenerateBlocScreen extends AnAction {
     private Project project;
     private String psiPath;
     private BlocTaoData data;
@@ -27,13 +26,16 @@ public class NewBloc extends AnAction {
      */
     private JDialog jDialog;
     private JTextField nameTextField;
-    private ButtonGroup templateGroup;
     /**
      * Checkbox
      * Use folder：default true
      * Use prefix：default false
      */
-    private JCheckBox folderBox, prefixBox;
+    private JCheckBox isScreenBox;
+
+    private JRadioButton actualVersionBtn, previousVersionBtn;
+
+    private final String dotDart = ".dart";
 
     @Override
     public void actionPerformed(AnActionEvent event) {
@@ -56,7 +58,7 @@ public class NewBloc extends AnAction {
 
         //Set the main mode style
         //deal default value
-        setMode(container);
+        addSelectorVersion(container);
 
         //Setting options: whether to use prefix
         //deal default value
@@ -81,7 +83,7 @@ public class NewBloc extends AnAction {
         //Create a file
         createFile();
         //Refresh project
-        project.getBaseDir().refresh(false, true);
+        project.getProjectFile().refresh(false, true);
     }
 
     /**
@@ -101,24 +103,28 @@ public class NewBloc extends AnAction {
     /**
      * Main module
      */
-    private void setMode(Container container) {
+    private void addSelectorVersion(Container container) {
         //Two rows and two columns
-        JPanel template = new JPanel();
-        template.setLayout(new GridLayout(1, 2));
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridLayout(1, 2));
         //Set the main module style：mode, function
-        template.setBorder(BorderFactory.createTitledBorder("Select Mode"));
+        jPanel.setBorder(BorderFactory.createTitledBorder("Select version"));
         //default: high setting
-        JRadioButton highBtn = new JRadioButton(BlocConfig.modeBloc, true);
-        setPadding(highBtn, 5, 10);
-        highBtn.setActionCommand(BlocConfig.modeBloc);
+        actualVersionBtn = new JRadioButton(BlocConfig.actualVersion, true);
+        previousVersionBtn = new JRadioButton(BlocConfig.previousVersion, false);
+        setPadding(actualVersionBtn);
 
+        actualVersionBtn.setActionCommand(BlocConfig.actualVersion);
+        previousVersionBtn.setActionCommand(BlocConfig.previousVersion);
 
-        template.add(highBtn);
-        templateGroup = new ButtonGroup();
+        ButtonGroup group = new ButtonGroup();
+        group.add(actualVersionBtn);
+        group.add(previousVersionBtn);
 
-        templateGroup.add(highBtn);
+        jPanel.add(actualVersionBtn);
+        jPanel.add(previousVersionBtn);
 
-        container.add(template);
+        container.add(jPanel);
         setDivision(container);
     }
 
@@ -127,21 +133,16 @@ public class NewBloc extends AnAction {
      */
     private void setCodeFile(Container container) {
         //Select build file
-        JPanel file = new JPanel();
-        file.setLayout(new GridLayout(1, 2));
-        file.setBorder(BorderFactory.createTitledBorder("Select Function"));
-
-        //use folder
-        folderBox = new JCheckBox("useFolder", data.useFolder);
-        setMargin(folderBox, 5, 10);
-        file.add(folderBox);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 2));
+        panel.setBorder(BorderFactory.createTitledBorder("Select Function"));
 
         //use prefix
-        prefixBox = new JCheckBox("usePrefix", data.usePrefix);
-        setMargin(prefixBox, 5, 10);
-        file.add(prefixBox);
+        isScreenBox = new JCheckBox("is Screen", data.isScreen);
+        setMargin(isScreenBox);
+        panel.add(isScreenBox);
 
-        container.add(file);
+        container.add(panel);
         setDivision(container);
     }
 
@@ -179,24 +180,47 @@ public class NewBloc extends AnAction {
 
     private void createFile() {
 
-        data.useFolder = folderBox.isSelected();
-        data.usePrefix = prefixBox.isSelected();
-
+        data.isScreen = isScreenBox.isSelected();
 
         String name = upperCase(nameTextField.getText());
         String prefix = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
         String folder = "/" + prefix;
         String prefixName = prefix + "_";
 
-        generateNewBloc(folder, prefixName);
+        if (actualVersionBtn.isSelected()) {
+            generateActualVersionBloc(folder, prefixName);
+        } else if (previousVersionBtn.isSelected()) {
+            generatePreviousVersionBloc(folder, prefixName);
+        }
+
     }
 
-    private void generateNewBloc(String folder, String prefixName) {
+    private void generateActualVersionBloc(String folder, String prefixName) {
         String path = psiPath + folder;
-        generateFile("new_bloc/screen.dart", path, prefixName + data.viewFileName.toLowerCase() + ".dart");
-        generateFile("new_bloc/bloc.dart", path + "/bloc/", prefixName + data.blocName.toLowerCase() + ".dart");
-        generateFile("new_bloc/event.dart", path + "/bloc/", prefixName + data.eventName.toLowerCase() + ".dart");
-        generateFile("new_bloc/state.dart", path + "/bloc/", prefixName + "state" + ".dart");
+
+        if (isScreenBox.isSelected()) {
+            generateFile("actual_version/screen.dart", path, prefixName + data.viewFileName.toLowerCase() + dotDart);
+        } else {
+            generateFile("actual_version/widget.dart", path, prefixName.replaceFirst("_", "") + dotDart);
+        }
+
+        generateFile("actual_version/bloc.dart", path + "/bloc/", prefixName + data.blocName.toLowerCase() + dotDart);
+        generateFile("actual_version/event.dart", path + "/bloc/", prefixName + data.eventName.toLowerCase() + dotDart);
+        generateFile("actual_version/state.dart", path + "/bloc/", prefixName + "state" + ".dart");
+    }
+
+    private void generatePreviousVersionBloc(String folder, String prefixName) {
+        String path = psiPath + folder;
+
+        if (isScreenBox.isSelected()) {
+            generateFile("previous_version/screen.dart", path, prefixName + data.viewFileName.toLowerCase() + dotDart);
+        } else {
+            generateFile("previous_version/widget.dart", path, prefixName.replaceFirst("_", "") + dotDart);
+        }
+
+        generateFile("previous_version/bloc.dart", path + "/bloc/", prefixName + data.blocName.toLowerCase() + dotDart);
+        generateFile("previous_version/event.dart", path + "/bloc/", prefixName + data.eventName.toLowerCase() + dotDart);
+        generateFile("previous_version/state.dart", path + "/bloc/", prefixName + "state" + dotDart);
     }
 
 
@@ -236,6 +260,7 @@ public class NewBloc extends AnAction {
         String content = "";
         try {
             InputStream in = this.getClass().getResourceAsStream(baseFolder + inputFileName);
+            assert in != null;
             content = new String(readStream(in));
         } catch (Exception e) {
         }
@@ -266,7 +291,7 @@ public class NewBloc extends AnAction {
         ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
         try {
             byte[] buffer = new byte[1024];
-            int len = -1;
+            int len;
             while ((len = inStream.read(buffer)) != -1) {
                 outSteam.write(buffer, 0, len);
                 System.out.println(new String(buffer));
@@ -297,23 +322,20 @@ public class NewBloc extends AnAction {
         }
     };
 
-    private final ActionListener actionListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("Cancel")) {
-                dispose();
-            } else {
-                save();
-            }
+    private final ActionListener actionListener = e -> {
+        if (e.getActionCommand().equals("Cancel")) {
+            dispose();
+        } else {
+            save();
         }
     };
 
-    private void setPadding(JRadioButton btn, int top, int bottom) {
-        btn.setBorder(BorderFactory.createEmptyBorder(top, 10, bottom, 0));
+    private void setPadding(JRadioButton btn) {
+        btn.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 0));
     }
 
-    private void setMargin(JCheckBox btn, int top, int bottom) {
-        btn.setBorder(BorderFactory.createEmptyBorder(top, 10, bottom, 0));
+    private void setMargin(JCheckBox btn) {
+        btn.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 0));
     }
 
     private void setDivision(Container container) {
