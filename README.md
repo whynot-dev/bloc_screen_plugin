@@ -19,3 +19,5 @@ The description of the plugin
     - is Screen: if true adds "Screen" to the name
 
 - Directory Name: the Name of the directory screen. Use the hump Name.
+
+## [Download](https://drive.google.com/file/d/1QehBuQRyL7fai7oy6HYyHtUVgywUWCIK/view?usp=sharing)
